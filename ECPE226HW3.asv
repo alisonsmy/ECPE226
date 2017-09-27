@@ -14,10 +14,9 @@ lr = 0.1; % learning rates of 0.1, 1, 10, 50.
 
 while % ~(stopping criteria)
    for i = 1:N
-      s = sign(dot(w,x(i,:))); % s = sign(wTx)
-      ys = -(y(i)*s); % input from logistic function
-      g = 1/(1+exp(-ys)); % logistic function
-      grad(i,:) = g; %calculate gradient for each element
+      s = sign(dot(w,x(i,:))); % sign(wTx)
+      ys = -(y(i)*s);
+      grad(i,:) = y(i)*x(i)*ys; %calculate gradient for each element
    end
    v = -(sum(grad)/N)'; %calculate average direction vector
    w = w + (lr)*v; %update weight vector
