@@ -27,3 +27,21 @@ end
 
 
 % Logistic Regression with Stochastic Gradient Descent (single data point)
+
+
+
+
+
+%calculate the frequency of error
+function er = FindNormalError(w, x, y)
+    e = 0;
+    n = length(x);
+    for i = 1:n            % from 1 to N
+        s = sign(dot(w,x(i,:))); % sign(wTx)
+        if s ~= y(i)  % when sign is not equal to y
+            e = e + 1;     % evaluates to TRUE (+1), else FALSE (0)
+        end
+    end
+    er = e/n;           % sum*1/N
+    return; 
+end
