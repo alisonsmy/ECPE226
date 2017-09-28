@@ -11,37 +11,35 @@ raw_data = File.data;
 lr = 0.1; % learning rates of 0.1, 1, 10, 50.
 
 % Logistic Regression with Batch Gradient Descent
-
-while % ~(stopping criteria)
-   for i = 1:N
-      s = sign(dot(w,x(i,:))); % s = sign(wTx)
-      ys = -(y(i)*s); % input from logistic function
-      g = 1/(1+exp(-ys)); % logistic function
-      grad(i,:) = g; %calculate gradient for each element
-   end
-   v = -(sum(grad)/N)'; %calculate average direction vector
-   w = w + (lr)*v; %update weight vector
-   %update stopping criteria
+grad = zeros(example, 1);
+run = true;
+while run
+    for i = 1:N
+        s = sign(dot(w,x(i,:))); % s = sign(wTx)
+        ys = -(y(i)*s); % input from logistic function, -Yn*s
+        logis = 1/(1+exp(-ys)); % logistic function, 1/e^(-s)
+        grad(i,:) = y(i)*x(i)*logis; %calculate gradient for each element, Yn*Xn*logistic(-Yn*s)
+    end
+    v = -(sum(grad)/N)'; %calculate average direction vector, -1/N*sum of gradients
+    w = w + (lr)*v; %update weight vector
+    %update stopping criteria
+    % if gradient is small enough, stop
 end
 
 
 
 % Logistic Regression with Stochastic Gradient Descent (single data point)
-
-
-
-
-
-%calculate the frequency of error
-function er = FindNormalError(w, x, y)
-    e = 0;
-    n = length(x);
-    for i = 1:n            % from 1 to N
-        s = sign(dot(w,x(i,:))); % sign(wTx)
-        if s ~= y(i)  % when sign is not equal to y
-            e = e + 1;     % evaluates to TRUE (+1), else FALSE (0)
-        end
-    end
-    er = e/n;           % sum*1/N
-    return; 
+while % ~(stopping criteria)
+    i = rand([1 N], 1); %get a random integer from 1 to N
+    s = sign(dot(w,x(i,:))); % s = sign(wTx)
+    ys = -(y(i)*s); % input from logistic function, -Yn*s
+    logis = 1/(1+exp(-ys)); % logistic function, 1/e^(-s)
+    grad = y(i)*x(i)*logis; %calculate gradient for each element, Yn*Xn*logistic(-Yn*s)
+    w = w - lr*grad; %update weight vector
+    %update stopping criteria
 end
+
+
+
+
+
