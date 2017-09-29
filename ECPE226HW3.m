@@ -22,8 +22,12 @@ testing = cleanedData(:,1:400);
 training = cleanedData(:,400:(N*digit));
 
 result = BatchGradientDescent(training, testing, 0.1);
+disp("Logistic Regression with Batch Gradient Descent: ");
 disp(result);
 
+disp("Logistic Regression with Stochastic Gradient Descent: ");
+result = StochasticGradientDescent(training, 0.1);
+disp(result);
 
 
 
