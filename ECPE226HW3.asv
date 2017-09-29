@@ -9,25 +9,17 @@ File = load('usps_modified.mat');
 raw_data = File.data;
 [img, example, digit] = size(raw_data);
 lr = 0.1; % learning rates of 0.1, 1, 10, 50.
+N = example;
 
-% Logistic Regression with Batch Gradient Descent
+ones = clean(data(:,:,1), 1);
 
-while % ~(stopping criteria)
-    for i = 1:N
-      
-        s = sign(dot(w,x(i,:))); % s = sign(wTx)
-        ys = -(y(i)*s); % input from logistic function
-        g = 1/(1+exp(-ys)); % logistic function
-        grad(i,:) = g; %calculate gradient for each element
-    end
-    v = -(sum(grad)/N)'; %calculate average direction vector
-    w = w + (lr)*v; %update weight vector
-    %update stopping criteria
-end
+others = clean(data(:,n,[2:10]), -1);
+
+training = [ones(1:400); others(1:400)];
+testing = [ones(400:500); others(400:500)];
 
 
 
-% Logistic Regression with Stochastic Gradient Descent (single data point)
 
 
 
