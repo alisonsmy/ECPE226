@@ -3,7 +3,7 @@ function [ result ] = BatchGradientDescent(training, testing, learningRate)
 %   Detailed explanation goes here
 
 [d, N] = size(training);
-[~, M] = size(testing);
+[
 
 disp("Dimension is: " + d);
 disp("Training  size: " + N);
@@ -17,10 +17,20 @@ y = training(1, :);
 
 % d-1 because the first value is the result
 w = zeros(d-1,1);
-prevError = 100;
+
 while run
     for i = 1:N
-        grad(i,:) = GradientSignal(w, x(:,i), y(:,i)); 
+        % s = sign(wTx)
+        s = sign(dot(w, x(:,i)));
+        
+        % input from logistic function, -Yn*s
+        ys = -(y(:,i)*s); 
+        
+        % logistic function, 1/e^(-s)
+        logis = 1/(1+exp(-ys)); 
+        
+        %calculate gradient for each element, Yn*Xn*logistic(-Yn*s)
+        grad(i,:) = y(:,i)*x(:,i)*logis; 
     end
     
     %calculate average direction vector, -1/N*sum of gradients
@@ -29,17 +39,9 @@ while run
     %update weight vector
     w = w + (learningRate)*v; 
     
-    % Calculate Error
-    errors = zeros(M);
-    for i = 1:M
-        s = sign(dot(w, x(:,i)));
-        errors(i) = (y(:,i) - s)^2;
-    end
-    error = sum(errors)/M;
-    disp(error);
-    
-    % Determine if algorithm should stop
-    run = abs(error - prevError) < 1;
+    %update stopping criteria
+    % if gradient is small enough, stop
+    run = norm(v) < 0.1;
 end
 
 result = w;
