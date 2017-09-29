@@ -54,6 +54,19 @@ disp("Logistic Regression with Stochastic Gradient Descent: ");
 result = StochasticGradientDescent(xTrain, 0.1);
 disp(result);
 
+disp(ones(:, 50));
+
+figure
+
+scatter(ones(2,:), ones(3,:),5,'g','filled');
+hold('on');
+
+scatter(others(2,:), others(3,:),5,'r','filled');
+hold('on');
+
+x = linspace(0,0.1, 10);
+y = (-1/result(2)/(1/result(1)))*x;
+plot(x,y)
 
 
 
