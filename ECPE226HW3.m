@@ -4,7 +4,6 @@
 % 9/25/2017
 % HW3 - Logistic Regression
 
-lr = 0.1; % learning rates of 0.1, 1, 10, 50.
 
 File = load('usps_modified.mat');
 raw_data = File.data;
@@ -46,34 +45,42 @@ training = cleanedData(:,400:(N*digit));
 % Const1 = ones(N*9, 1);
 % xVerif = [Const1, VecX3, VecX4];
 
-% result = BatchGradientDescent(testing, training, 0.1);
-% disp("Logistic Regression with Batch Gradient Descent: ");
+lr = 0.1; % learning rates of 0.1, 1, 10, 50.
 
-
-disp("Logistic Regression with Stochastic Gradient Descent: ");
-result = StochasticGradientDescent(cleanedData, 0.1);
-% disp(result);
-% 
-% disp(ones(:, 50));
-
-figure
-
+figure;
+hold on;
 axis([-1 1 -1 1]);
 ax = gca;
 ax.XAxisLocation = 'origin';
 ax.YAxisLocation = 'origin';
 scatter(ones(3,:), ones(4,:),5,'g','filled');
-hold('on');
 
 scatter(others(3,:), others(4,:),5,'r','filled');
-hold('on');
+hold off;
+% Run 10 times each for each rate
+for r = 1:10
+    % result = BatchGradientDescent(testing, training, lr);
+    result = StochasticGradientDescent(training, lr);
 
-disp("Result is " + result)
-m = -1:0.01:1;
-k = -(result(2)*m + result(1))/result(3);
-plot(m,k);
+    % disp(result);
+    % 
+    % disp(ones(:, 50));
 
-T = ['Graph of ', 'results'];
+    % scatter(ones(3,:), ones(4,:),5,'g','filled');
+    % hold('on');
+    % 
+    % scatter(others(3,:), others(4,:),5,'r','filled');
+    % hold('on');
+
+    % disp("Result is " + result)
+    m = -1:0.01:1;
+    k = -(result(2)*m + result(1))/result(3);
+    hold on;
+    plot(m,k, 'color',[.9 .9 .9]);
+    hold off;
+end
+
+T = ['Graph of result with learning rate: ', num2str(lr)];
 title(T);
 
 
