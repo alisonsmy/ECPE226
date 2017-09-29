@@ -71,11 +71,8 @@ hold('on');
 disp("Result is " + result)
 m = -1:0.01:1;
 k = -(result(2)*m + result(1))/result(3);
-plot(m,k);
-
-T = ['Graph of ', 'results'];
-title(T);
-
+T = ['Graph of
+plot(m,k)
 
 
 

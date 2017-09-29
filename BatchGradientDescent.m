@@ -25,7 +25,6 @@ errorSimilarity = 0;
 threshold = 10;
 
 while errorSimilarity < threshold
-    disp("Iteration: " + iter);
     for i = 1:N
         grad(i,:) = GradientSignal(w, x(:,i), y(:,i)); 
     end
@@ -39,20 +38,23 @@ while errorSimilarity < threshold
     % Calculate Error
     errors = zeros(M,1);
     for i = 1:M
-        s = sign(dot(w, x(:,i)));
-        errors(i) = (y(:,i) - s)^2;
+        s = dot(w', testing(2:d,i));
+        errors(i) = (testing(1,i) - s)^2;
     end
     error = mean(errors);
     
     % Determine if algorithm should stop
-    if error == prevError
+    if abs(error - prevError) < 0.5
         errorSimilarity = errorSimilarity + 1;
+    else
+        errorSimilarity = 0;
     end
     
     iter = iter + 1;
     prevError = error;
 end
 
+disp("Gradient descent completed in: " + iter);
 result = w;
 
 end

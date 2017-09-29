@@ -20,7 +20,7 @@ while run
     w = w - (learningRate)*grad; 
 
     % Determine if algorithm should stop
-    run = norm(grad) < 0.1; % if gradient is small enough
+    run = norm(grad) < 0.01; % if gradient is small enough
 
 end
 
