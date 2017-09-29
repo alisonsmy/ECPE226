@@ -11,13 +11,14 @@ raw_data = File.data;
 ones = CleanData(raw_data(:,:,1), 1);
 others = CleanData(raw_data(:,:,2:10), -1);
 
+rng(314159265);
 idx = randperm(N*digit);
 
 cleanedData = cat(2,ones, others);
 cleanedData = cleanedData(:,idx);
 
 testing = cleanedData(:,1:400);
-training = cleanedData(:,400:(N*digit));
+training = cleanedData(:,401:(N*digit));
 
 lr = 0.1; % learning rates of 0.1, 1, 10, 50.
 
@@ -41,6 +42,9 @@ for r = 1:10
     hold on;
     if r == 10
         plot(m,k, 'color',[.9 0.5 0.0]);
+        [in, out] = MeasureError(training, testing, result);
+        disp("Ein: " + in);
+        disp("Eout: " + out);
     else
         plot(m,k, 'color',[.9 .9 .9]);
     end

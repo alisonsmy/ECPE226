@@ -37,17 +37,17 @@ while errorSimilarity < threshold
     w = w + (learningRate*v); 
     
     % Calculate Error
-    errors = 0;
+    errors = zeros(M,1);
     for i = 1:M
         s = dot(w, testing(2:d,i));
         target = testing(1,i);
-        errors = errors + ((s - target)^2);
+        errors(i) = ((target - s)^2)/2;
     end
-    error = errors/(2*M);
+    error = mean(errors);
     
     % Determine if algorithm should stop
-    if error > prevError
-        errorSimilarity = threshold;
+    if round(error,3) == round(prevError, 5)
+        errorSimilarity = errorSimilarity + 1;
     else
         errorSimilarity = 0;
     end
