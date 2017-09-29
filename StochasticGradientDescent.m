@@ -19,7 +19,10 @@ while run
     if iter > 1
         preGrad = grad;
     end
-    grad = GradientSignal(w, x(:,i), y(:,i)); 
+    grad = GradientSignal(w, x(:,i), y(:,i));
+    %calculate average direction vector, -1/N*sum of gradients
+    %For SGD, N would be 1 because it get 1 training example at a time
+    v = -(grad/1); 
 
     %update weight vector
     w = w + (learningRate)*grad;
