@@ -18,8 +18,8 @@ y = training(1, :);
 w = rand(d-1,1);
 
 % Set previous error to impossible value
-prevError = -1;
 
+prevError = -1;
 iter = 1;
 errorSimilarity = 0;
 threshold = 10;
