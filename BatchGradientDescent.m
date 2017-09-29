@@ -8,14 +8,12 @@ function [ result ] = BatchGradientDescent(training, testing, learningRate)
 disp("Dimension is: " + d);
 disp("Training  size: " + N);
 
-% d-1 because the first value is the result
-grad = zeros(N, d-1);
-
 x = training(2:d, :);
 y = training(1, :);
 
 % d-1 because the first value is the result
 w = rand(d-1,1);
+grad = zeros(d-1, 1);
 
 % Set previous error to impossible value
 prevError = -1;
@@ -26,12 +24,13 @@ threshold = 5;
 
 while errorSimilarity < threshold
     disp ("Iteration: " + iter);
+    
     for i = 1:N
-        grad(i,:) = GradientSignal(w, x(:,i), y(:,i)); 
+        grad = grad + GradientSignal(w, x(:,i), y(:,i)); 
     end
     
     %calculate average direction vector, -1/N*sum of gradients
-    v = -(sum(grad)/N)'; 
+    v = -(grad/N); 
     
     %update weight vector
     w = w + (learningRate*v); 

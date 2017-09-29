@@ -34,8 +34,8 @@ hold off;
 
 % Run 10 times each for each rate
 for r = 1:10
-%     result = BatchGradientDescent(training, testing, lr);
-    result = StochasticGradientDescent(training, lr);
+    result = BatchGradientDescent(training, testing, lr);
+%     result = StochasticGradientDescent(training, lr);
 
     m = -1:0.01:1;
     k = -(result(2)*m + result(1))/result(3);
