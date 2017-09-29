@@ -11,7 +11,7 @@ ys = -(y*s);
 logis = 1/(1+exp(-(ys))); 
 
 %calculate gradient for each element, Yn*Xn*logistic(-Yn*s)
-grad = y*x*logis;
+grad = -(y*x*logis);
 
 end
 
