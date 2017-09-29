@@ -15,16 +15,13 @@ others = CleanData(raw_data(:,:,2:10), -1);
 
 idx = randperm(N*digit);
 
-disp(size(ones));
-disp(size(others));
-
 cleanedData = cat(2,ones, others);
 cleanedData = cleanedData(:,idx);
 
 testing = cleanedData(:,1:400);
 training = cleanedData(:,400:(N*digit));
 
-result = BatchGradientDescent(cleanedData, training, testing, 0.1);
+result = BatchGradientDescent(training, testing, 0.1);
 disp(result);
 
 

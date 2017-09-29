@@ -10,15 +10,22 @@ disp("Training  size: " + N);
 
 % d-1 because the first value is the result
 grad = zeros(N, d-1);
-run = true;
 
 x = training(2:d, :);
 y = training(1, :);
 
 % d-1 because the first value is the result
-w = zeros(d-1,1);
-prevError = 100;
-while run
+w = rand(d-1,1);
+
+% Set previous error to impossible value
+prevError = -1;
+
+iter = 1;
+errorSimilarity = 0;
+threshold = 10;
+
+while errorSimilarity < threshold
+    disp("Iteration: " + iter);
     for i = 1:N
         grad(i,:) = GradientSignal(w, x(:,i), y(:,i)); 
     end
@@ -30,16 +37,20 @@ while run
     w = w + (learningRate)*v; 
     
     % Calculate Error
-    errors = zeros(M);
+    errors = zeros(M,1);
     for i = 1:M
         s = sign(dot(w, x(:,i)));
         errors(i) = (y(:,i) - s)^2;
     end
-    error = sum(errors)/M;
-    disp(error);
+    error = mean(errors);
     
     % Determine if algorithm should stop
-    run = abs(error - prevError) < 1;
+    if error == prevError
+        errorSimilarity = errorSimilarity + 1;
+    end
+    
+    iter = iter + 1;
+    prevError = error;
 end
 
 result = w;
