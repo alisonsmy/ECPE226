@@ -1,9 +1,0 @@
-% Vector with each average intensity value in the image
-function intensity = GetIntensity(D)
-r = 256;
-pixel = D; % get pixel of example 1
-data = 2*(double(pixel)/255)-1; % convert pixels with range from -1 to 1
-sumOfM = sum(data); % sum of pixels in martix
-% intensity = sum/256
-intensity = sumOfM(1)/r;    
-end

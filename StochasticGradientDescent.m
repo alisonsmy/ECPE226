@@ -22,7 +22,7 @@ while run
     grad = GradientSignal(w, x(:,i), y(:,i)); 
 
     %update weight vector
-    w = w - (learningRate)*grad;
+    w = w + (learningRate)*grad;
     iter = iter +1;
 
 %     % Determine if algorithm should stop

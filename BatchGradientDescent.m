@@ -20,7 +20,7 @@ prevError = -1;
 
 iter = 1;
 errorSimilarity = 0;
-threshold = 5;
+threshold = 10;
 
 while errorSimilarity < threshold
     disp ("Iteration: " + iter);
@@ -30,7 +30,7 @@ while errorSimilarity < threshold
     end
     
     %calculate average direction vector, -1/N*sum of gradients
-    v = -(grad/N); 
+    v = grad/N; 
     
     %update weight vector
     w = w + (learningRate*v); 
@@ -45,8 +45,8 @@ while errorSimilarity < threshold
     error = errors/(2*M);
     
     % Determine if algorithm should stop
-    if error > prevError
-        errorSimilarity = threshold;
+    if abs(error - prevError) < 10
+        errorSimilarity = errorSimilarity + 1;
     else
         errorSimilarity = 0;
     end
