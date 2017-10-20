@@ -1,0 +1,14 @@
+classdef Layer
+    properties
+        weights
+        outputs
+    end
+    
+    methods
+        function forward(prev)
+        end
+        
+        function back()
+        end
+    end
+end
