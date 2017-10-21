@@ -2,13 +2,19 @@ classdef Layer
     properties
         weights
         outputs
+        theta
+        thetaPrime
     end
     
     methods
-        function forward(prev)
+        function h = forward(obj, xPrev)
+            s = dot(obj.weights, xPrev);
+            obj.outputs = [1 obj.theta(s)];
+            h = obj.outputs;
         end
         
-        function back()
+        function back(obj, deltaPrev)
+            delta = obj.thetaPrime(obj.outputs(2:));
         end
     end
 end
