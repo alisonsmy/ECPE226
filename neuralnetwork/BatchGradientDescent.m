@@ -5,8 +5,8 @@ function [ result ] = BatchGradientDescent(training, testing, learningRate)
 [d, N] = size(training);
 [~, M] = size(testing);
 
-disp("Dimension is: " + d);
-disp("Training  size: " + N);
+disp('Dimension is: ' + d);
+disp('Training  size: ' + N);
 
 x = training(2:d, :);
 y = training(1, :);
@@ -23,7 +23,7 @@ errorSimilarity = 0;
 threshold = 10;
 
 while errorSimilarity < threshold
-    disp ("Iteration: " + iter);
+    disp ('Iteration: ' + iter);
     
     for i = 1:N
         grad = grad + GradientSignal(w, x(:,i), y(:,i)); 
@@ -55,7 +55,7 @@ while errorSimilarity < threshold
     prevError = error;
 end
 
-disp("Gradient descent completed in: " + iter);
+disp('Gradient descent completed in: ' + iter);
 result = w;
 
 end
