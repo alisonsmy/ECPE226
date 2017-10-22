@@ -45,7 +45,8 @@ end
 disp('Result of forward prop: ');
 disp(input);
 
-deltas = [];
+y = 1;
+deltas = (network(3).outputs(2) - y) * thetaPrime(network(3).outputThetas);
 for i = 3:-1:1
     deltas = network(i).back(deltas);
 end
