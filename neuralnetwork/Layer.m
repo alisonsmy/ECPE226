@@ -2,6 +2,7 @@ classdef Layer < handle
     properties
         weights
         outputs
+        outputThetas
         theta
         thetaPrime
         weightUpdate
@@ -22,15 +23,16 @@ classdef Layer < handle
             disp(size(obj.weights'));
             disp(size(xPrev));   
             
-            s = sum(obj.weights * xPrev', 2);
-            disp(size(s));
-            obj.outputs = obj.theta(s); 
-            h = [1; obj.outputs];
+            obj.outputs = sum(obj.weights * xPrev', 2);
+            disp(size(obj.outputs));
+            
+            obj.outputThetas = obj.theta(s); 
+            h = [1; obj.outputThetas];
         end
         
         % Performs back propogation
         function deltas = back(obj, deltasPrev)
-            sPrime = obj.thetaPrime(obj.outputs(2:end));
+            sPrime = obj.thetaPrime(obj.outputs(end));
             deltas = sPrime .* dot(obj.weights,deltasPrev);
             obj.weights = obj.weightUpdate(obj.weights, deltas);
         end
