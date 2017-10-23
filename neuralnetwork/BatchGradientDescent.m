@@ -11,10 +11,11 @@ iter = 1;
 errorSimilarity = 0;
 threshold = 10;
 
-while errorSimilarity < threshold
-    disp ('Iteration: ' + iter);
+while errorSimilarity < threshold && iter < 1000
+    disp ('Iteration: ' + string(iter));
     
     [Ein] = TrainingBGD(network, training);
+    disp('Ein: ' + string(Ein));
     
     for i = 1 : 3
         network(i).updateWithGradient(learningRate);

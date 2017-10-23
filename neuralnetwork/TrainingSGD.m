@@ -27,7 +27,8 @@ function [finalG, Ein] = TrainingSGD(network,training)
     for l = L:-1:2
         deltas = network(l).backNoUpdate(deltas);
         xn = network(l-1).outputThetas;
-        G = sum(xn' * deltas');
+        G = ApplyVecotr(xn, deltas);
+        n
     end
     finalG = G;
 end

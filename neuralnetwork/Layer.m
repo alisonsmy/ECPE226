@@ -20,14 +20,14 @@ classdef Layer < handle
         
         % Performs forward propogation
         function h = forward(obj, xPrev)          
-            obj.outputs = sum(obj.weights * xPrev', 2);
-            obj.outputThetas = obj.theta(obj.outputs); 
-            h = [1; obj.outputThetas'];
+            obj.outputs = ApplyVector(obj.weights, xPrev);
+            obj.outputThetas = arrayfun(obj.theta, obj.outputs); 
+            h = [1; obj.outputThetas];
         end
         
         % Performs back propogation
         function deltas = back(obj, deltasPrev, eta)
-            sPrime = obj.thetaPrime(obj.outputs);
+            sPrime = applyfun(obj.thetaPrime, obj.outputs);
             deltas = sPrime .* sum(obj.weights .* deltasPrev);
             obj.weights = obj.weights + (eta * deltas);
         end

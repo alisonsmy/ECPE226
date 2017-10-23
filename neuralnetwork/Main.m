@@ -20,7 +20,7 @@ cleanedData = cleanedData(:,idx);
 testing = cleanedData(:,1:400);
 training = cleanedData(:,401:(N*digit));
 
-lr = 0.1; % learning rates of 0.1, 1, 10, 50.
+lr = 100; % learning rates of 0.1, 1, 10, 50.
 
 theta = @(s) (1/(1 + exp(-s)));
 thetaPrime = @(x) x.*(1-x);
