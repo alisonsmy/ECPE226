@@ -22,18 +22,19 @@ training = cleanedData(:,401:(N*digit));
 
 lr = 0.1; % learning rates of 0.1, 1, 10, 50.
 
-theta = @(x) x;
-thetaPrime = @(x) x;
+theta = @(s) (1/(1 + exp(-s)));
+thetaPrime = @(x) x*(1-x);
+id = @(s)s;
 weightUpdate = @(x) x;
 
 layer1 = Layer;
-layer1.initRandom(2,theta, thetaPrime, weightUpdate);
+layer1.initRandom(2, theta, thetaPrime, weightUpdate);
 
 layer2 = Layer;
 layer2.initRandom(5,theta, thetaPrime, weightUpdate);
 
 layer3 = Layer;
-layer3.initRandom(1,theta, thetaPrime, weightUpdate);
+layer3.initRandom(1,id, thetaPrime, weightUpdate);
 
 network = [layer1 layer2 layer3];
 
