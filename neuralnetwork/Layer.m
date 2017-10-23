@@ -10,11 +10,10 @@ classdef Layer < handle
     
     methods
         % Initializes the layer
-        function initRandom(obj, depth, t, tPrime, u)
+        function initRandom(obj, depth, t, tPrime)
             obj.weights = rand(depth, 1);
             obj.theta = t;
             obj.thetaPrime = tPrime;
-            obj.weightUpdate = u;
         end
         
         % Performs forward propogation
@@ -31,10 +30,10 @@ classdef Layer < handle
         end
         
         % Performs back propogation
-        function deltas = back(obj, deltasPrev)
+        function deltas = back(obj, deltasPrev, eta)
             sPrime = obj.thetaPrime(obj.outputs(end));
             deltas = sPrime .* sum(obj.weights * deltasPrev);
-            obj.weights = obj.weightUpdate(obj.weights, deltas);
+            obj.weights = obj.weights + (eta * deltas);
         end
     end
 end

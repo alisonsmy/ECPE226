@@ -25,16 +25,15 @@ lr = 0.1; % learning rates of 0.1, 1, 10, 50.
 theta = @(s) (1/(1 + exp(-s)));
 thetaPrime = @(x) x*(1-x);
 id = @(s)s;
-weightUpdate = @(w, g) w + (0.1 * g);
 
 layer1 = Layer;
-layer1.initRandom(2, theta, thetaPrime, weightUpdate);
+layer1.initRandom(2, theta, thetaPrime);
 
 layer2 = Layer;
-layer2.initRandom(5,theta, thetaPrime, weightUpdate);
+layer2.initRandom(5,theta, thetaPrime);
 
 layer3 = Layer;
-layer3.initRandom(1,id, thetaPrime, weightUpdate);
+layer3.initRandom(1,id, thetaPrime);
 
 network = [layer1 layer2 layer3];
 
@@ -53,7 +52,7 @@ x = network(3).outputs(:,1);
 disp(x);
 deltas = (x - y) * thetaPrime(network(3).outputThetas);
 for i = 3:-1:1
-    deltas = network(i).back(deltas);
+    deltas = network(i).back(deltas, 0.1);
 end
 
 % figure;
