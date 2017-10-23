@@ -20,7 +20,7 @@ cleanedData = cleanedData(:,idx);
 testing = cleanedData(:,1:400);
 training = cleanedData(:,401:(N*digit));
 
-lr = 100; % learning rates of 0.1, 1, 10, 50.
+lr = 0.1; % learning rates of 0.1, 1, 10, 50.
 
 theta = @(s) (1/(1 + exp(-s)));
 thetaPrime = @(x) x.*(1-x);
@@ -36,8 +36,8 @@ network = [layer1 layer2];
 
 %Run 10 times each for each rate
 
-result = BatchGradientDescent(training, testing, network, lr);
-%     result = StochasticGradientDescent(training, network, lr);
+% result = BatchGradientDescent(training, testing, network, lr);
+result = StochasticGradientDescent(training, testing, network, lr);
 
 m = 1:10;
 k = result(m);

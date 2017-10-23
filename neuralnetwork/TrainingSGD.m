@@ -16,9 +16,10 @@ function [Ein] = TrainingSGD(network, xi, yi)
     deltas = diff' * sig;
     for l = L:-1:2
         deltas = network(l).backNoUpdate(deltas);
-        xn = network(l-1).outputThetas;
-        Gn = ApplyVector(deltas, xn);
-        network(l).gradient = network(l).gradient + Gn;
+        xn = [1; network(l-1).outputThetas];
+        Gn = xn*deltas';
+        G = network(l).gradient;
+        network(l).gradient = G + Gn;
     end
 end
 

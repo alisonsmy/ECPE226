@@ -1,46 +1,58 @@
-function [ result ] = StochasticGradientDescent(training, network, learningRate)
+function [ result ] = StochasticGradientDescent(training, testing, network, learningRate)
 
 [d, N] = size(training);
+[~, M] = size(testing);
+[~, L] = size(network);
 
 disp('Dimension is: ' + d);
 disp('Training  size: ' + N);
 
-run = true;
-
-x = training(2:d, :);
+x = training(3:d, :);
 y = training(1, :);
 
 % d-1 because the first value is the result
-w = zeros(d-1,1);
+prevError = -1;
 iter = 1;
-preGrad = 0;
-while run
+errorSimilarity = 0;
+threshold = 10;
+
+Eins = zeros(1000, 1);
+
+while errorSimilarity < threshold && iter < 1000
+    fprintf ('Iteration: ' + string(iter) + '\n');
+    
     i = randi([1 N], 1); %get a random integer from 1 to N
-    if iter > 1
-        preGrad = grad;
-    end
+    [Ein] = TrainingSGD(network, x(:,i), y(i));
     
-    [Ein] = TrainingSGD(network, x(i), y(i));
-    disp ('Ein: ' + string(Ein));
+    fprintf('Ein: ' + string(Ein) + '\n');
+    Eins(iter) = Ein;
     
-    for i = 1 : 3
+    for i = 1 : L
         network(i).updateWithGradient(learningRate);
     end
     
-    iter = iter +1;
-
-%     % Determine if algorithm should stop
-%     % if gradient is small enough, stop
-%     run = norm(grad) < 0.001; 
+    % Calculate Error
+    errors = 0;
+    for i = 1:M
+        xi = testing(3:d,i);
+        output = sum(RunForwardProp(network, xi), 1);
+        target = testing(1,i);
+        errors = errors + ((output - target)^2);
+    end
+    error = errors/(2*M);
     
-    % Gradient hasn't changed significantly in the last n - # of iter, stop
-    if round(grad, 5) == round(preGrad, 5)
-        run = false;
-    end 
-
+    % Determine if algorithm should stop
+    if abs(error - prevError) < 10
+        errorSimilarity = errorSimilarity + 1;
+    else
+        errorSimilarity = 0;
+    end
+    
+    iter = iter + 1;
+    prevError = error;
 end
 disp('Gradient descent completed in: ' + iter);
-result = w;
+result = Eins;
 
 end
 
