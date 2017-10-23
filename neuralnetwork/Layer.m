@@ -39,7 +39,7 @@ classdef Layer < handle
         end
         
         function updateWithGradient(obj, eta)
-            obj.weights = obj.weights + (eta * obj.gradient);
+            obj.weights = obj.weights + (obj.gradient .* eta);
         end
     end
 end

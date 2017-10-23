@@ -25,7 +25,8 @@ function [Ein] = TrainingBGD(network,training)
         for l = L:-1:2
             deltas = network(l).backNoUpdate(deltas);
             xn = network(l-1).outputThetas;
-            Gn = xn * deltas';
+            f = @(x) sum(x*deltas);
+            Gn = arrayfun(f, xn);
             network(l).gradient = network(l).gradient + (1/N)*Gn;
         end
     end

@@ -16,14 +16,17 @@ while errorSimilarity < threshold
     
     [Ein] = TrainingBGD(network, training);
     
-    network = RunBackProp(network, g', learningRate);
+    for i = 1 : 3
+        network(i).updateWithGradient(learningRate);
+    end
     
     % Calculate Error
     errors = 0;
     for i = 1:M
-        s = dot(w, testing(2:d,i));
+        xi = testing(2:d,i);
+        output = sum(RunForwardProp(network, xi'), 1);
         target = testing(1,i);
-        errors = errors + ((s - target)^2);
+        errors = errors + ((output - target)^2);
     end
     error = errors/(2*M);
     
