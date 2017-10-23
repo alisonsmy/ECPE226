@@ -35,5 +35,11 @@ classdef Layer < handle
             deltas = sPrime .* sum(obj.weights * deltasPrev);
             obj.weights = obj.weights + (eta * deltas);
         end
+        
+                % Performs back propogation
+        function deltas = backNoUpdate(obj, deltasPrev, eta)
+            sPrime = obj.thetaPrime(obj.outputs(end));
+            deltas = sPrime .* sum(obj.weights * deltasPrev);
+        end
     end
 end
