@@ -26,14 +26,14 @@ classdef Layer < handle
             obj.outputs = sum(obj.weights * xPrev', 2);
             disp(size(obj.outputs));
             
-            obj.outputThetas = obj.theta(s); 
-            h = [1; obj.outputThetas];
+            obj.outputThetas = obj.theta(obj.outputs); 
+            h = [1; obj.outputThetas'];
         end
         
         % Performs back propogation
         function deltas = back(obj, deltasPrev)
             sPrime = obj.thetaPrime(obj.outputs(end));
-            deltas = sPrime .* dot(obj.weights,deltasPrev);
+            deltas = sPrime .* sum(obj.weights * deltasPrev);
             obj.weights = obj.weightUpdate(obj.weights, deltas);
         end
     end

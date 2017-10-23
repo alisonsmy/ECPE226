@@ -25,7 +25,7 @@ lr = 0.1; % learning rates of 0.1, 1, 10, 50.
 theta = @(s) (1/(1 + exp(-s)));
 thetaPrime = @(x) x*(1-x);
 id = @(s)s;
-weightUpdate = @(x) x;
+weightUpdate = @(w, g) w + (0.1 * g);
 
 layer1 = Layer;
 layer1.initRandom(2, theta, thetaPrime, weightUpdate);
@@ -38,6 +38,7 @@ layer3.initRandom(1,id, thetaPrime, weightUpdate);
 
 network = [layer1 layer2 layer3];
 
+% Forward Prop Test
 input = [1; 1; 1];
 for i = 1:3
     input = network(i).forward(input);
@@ -46,8 +47,11 @@ end
 disp('Result of forward prop: ');
 disp(input);
 
+% Back Prop Test
 y = 1;
-deltas = (network(3).outputs(2) - y) * thetaPrime(network(3).outputThetas);
+x = network(3).outputs(:,1);
+disp(x);
+deltas = (x - y) * thetaPrime(network(3).outputThetas);
 for i = 3:-1:1
     deltas = network(i).back(deltas);
 end
