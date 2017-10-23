@@ -23,7 +23,7 @@ training = cleanedData(:,401:(N*digit));
 lr = 0.1; % learning rates of 0.1, 1, 10, 50.
 
 theta = @(s) (1/(1 + exp(-s)));
-thetaPrime = @(x) x*(1-x);
+thetaPrime = @(x) x.*(1-x);
 id = @(s)s;
 
 layer1 = Layer;
@@ -37,55 +37,37 @@ layer3.initRandom(1,id, thetaPrime);
 
 network = [layer1 layer2 layer3];
 
-% Forward Prop Test
-input = [1; 1; 1];
-for i = 1:3
-    input = network(i).forward(input);
+figure;
+hold on;
+axis([-1 1 -1 1]);
+ax = gca;
+ax.XAxisLocation = 'origin';
+ax.YAxisLocation = 'origin';
+scatter(ones(3,:), ones(4,:),5,'g','filled');
+scatter(others(3,:), others(4,:),5,'r','filled');
+hold off;
+
+%Run 10 times each for each rate
+for r = 1:10
+    result = BatchGradientDescent(training, testing, network, lr);
+%     result = StochasticGradientDescent(training, lr);
+
+    m = -1:0.01:1;
+    k = -(result(2)*m + result(1))/result(3);
+    hold on;
+    if r == 10
+        plot(m,k, 'color',[.9 0.5 0.0]);
+        [in, out] = MeasureError(training, testing, result);
+        disp('Ein: ' + in);
+        disp('Eout: ' + out);
+    else
+        plot(m,k, 'color',[.9 .9 .9]);
+    end
+    hold off;
 end
 
-disp('Result of forward prop: ');
-disp(input);
-
-% Back Prop Test
-y = 1;
-x = network(3).outputs(:,1);
-disp(x);
-deltas = (x - y) * thetaPrime(network(3).outputThetas);
-for i = 3:-1:1
-    deltas = network(i).back(deltas, 0.1);
-end
-
-% figure;
-% hold on;
-% axis([-1 1 -1 1]);
-% ax = gca;
-% ax.XAxisLocation = 'origin';
-% ax.YAxisLocation = 'origin';
-% scatter(ones(3,:), ones(4,:),5,'g','filled');
-% scatter(others(3,:), others(4,:),5,'r','filled');
-% hold off;
-
-% Run 10 times each for each rate
-% for r = 1:10
-%     result = BatchGradientDescent(training, testing, lr);
-% %     result = StochasticGradientDescent(training, lr);
-% 
-%     m = -1:0.01:1;
-%     k = -(result(2)*m + result(1))/result(3);
-%     hold on;
-%     if r == 10
-%         plot(m,k, 'color',[.9 0.5 0.0]);
-%         [in, out] = MeasureError(training, testing, result);
-%         disp("Ein: " + in);
-%         disp("Eout: " + out);
-%     else
-%         plot(m,k, 'color',[.9 .9 .9]);
-%     end
-%     hold off;
-% end
-% 
-% T = ['Graph of result with learning rate: ', num2str(lr)];
-% title(T);
+T = ['Graph of result with learning rate: ', num2str(lr)];
+title(T);
 
 
 

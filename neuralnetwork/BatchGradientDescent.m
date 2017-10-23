@@ -1,23 +1,12 @@
-function [ result ] = BatchGradientDescent(training, testing, learningRate)
+function [ result ] = BatchGradientDescent(training, testing, network, learningRate)
 %BATCHGRADIENTDESCENT Summary of this function goes here
 %   Detailed explanation goes here
 
 [d, N] = size(training);
 [~, M] = size(testing);
 
-disp('Dimension is: ' + d);
-disp('Training  size: ' + N);
-
-x = training(2:d, :);
-y = training(1, :);
-
-% d-1 because the first value is the result
-w = rand(d-1,1);
-grad = zeros(d-1, 1);
-
 % Set previous error to impossible value
 prevError = -1;
-
 iter = 1;
 errorSimilarity = 0;
 threshold = 10;
@@ -25,15 +14,9 @@ threshold = 10;
 while errorSimilarity < threshold
     disp ('Iteration: ' + iter);
     
-    for i = 1:N
-        grad = grad + GradientSignal(w, x(:,i), y(:,i)); 
-    end
+    [Ein] = TrainingBGD(network, training);
     
-    %calculate average direction vector, -1/N*sum of gradients
-    v = grad/N; 
-    
-    %update weight vector
-    w = w + (learningRate*v); 
+    network = RunBackProp(network, g', learningRate);
     
     % Calculate Error
     errors = 0;
