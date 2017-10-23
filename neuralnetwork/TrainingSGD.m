@@ -1,17 +1,22 @@
-function [outputArg1,outputArg2] = TrainingSGD(x,y,lr,tol)
-%UNTITLED2 Summary of this function goes here
+function [g, Ein] = TrainingSGD(network,y)
+%UNTITLED Summary of this function goes here
 %   Detailed explanation goes here
-    [n,d] = size(x); 		%get size of input data
-    w = rand(d+1,1);        %start with random weight vector
-    x = [ones(n,1),x];      %add x(1) to input data, x(1) = 1 always
-    g = ones(d+1,1);
+    [L, ~] = size(network);
+    [n, d] = size(network(1).outputsTheta);
+    Ein = 0;
+    G = zeros(n, d+1);
+    g = zeros(L, n);
+    %do FWD Prop
 
-    while (abs(mean(g)) > tol)  
-        i = randi([1 n],1);
-        s = dot(w,x(i,:)');         %calculate signal
-        theta = 1/(1+exp(y(i)*s));  %calculate theta(-ys)
-        g = -y(i)*x(i,:)'*theta;    %calculate i-th gradient vector
-        w = w - lr*g;               %update weight vector
+    %do Back Prop
+    Ein = Ein + (1/(2*n))*((network(end).outputsTheta-y(i))^2);
+    for l = 1:L
+        G(i,:) = network(l-1).outputsTheta*network(i).back()';
+        g(l, :) = G;
     end
+
+    
 end
+
+
 
