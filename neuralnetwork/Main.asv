@@ -36,15 +36,22 @@ network = [layer1 layer2];
 
 %Run 10 times each for each rate
 
-result = BatchGradientDescent(training, testing, network, lr);
+    result = BatchGradientDescent(training, testing, network, lr);
 %     result = StochasticGradientDescent(training, network, lr);
 
-m = 1:10;
-k = result(m);
-
+m = 1:1000;
+k = result;
 hold on;
-plot(m,k, 'color','r');
+if r == 10
+    plot(m,k, 'color',[.9 0.5 0.0]);
+    [in, out] = MeasureError(training, testing, network);
+    disp('Ein: ' + in);
+    disp('Eout: ' + out);
+else
+    plot(m,k, 'color',[.9 .9 .9]);
+end
 hold off;
+
 
 T = ['Graph of result with learning rate: ', num2str(lr)];
 title(T);

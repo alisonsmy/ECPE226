@@ -4,6 +4,7 @@ function [ result ] = BatchGradientDescent(training, testing, network, learningR
 
 [d, N] = size(training);
 [~, M] = size(testing);
+[~, L] = size(network);
 
 % Set previous error to impossible value
 prevError = -1;
@@ -11,21 +12,24 @@ iter = 1;
 errorSimilarity = 0;
 threshold = 10;
 
+Eins = zeros(1000, 1);
+
 while errorSimilarity < threshold && iter < 1000
-    disp ('Iteration: ' + string(iter));
+    fprintf ('Iteration: ' + string(iter) + '\n');
     
     [Ein] = TrainingBGD(network, training);
-    disp('Ein: ' + string(Ein));
+    fprintf('Ein: ' + string(Ein) + '\n');
+    Eins(iter) = Ein;
     
-    for i = 1 : 3
+    for i = 1 : L
         network(i).updateWithGradient(learningRate);
     end
     
     % Calculate Error
     errors = 0;
     for i = 1:M
-        xi = testing(2:d,i);
-        output = sum(RunForwardProp(network, xi'), 1);
+        xi = testing(3:d,i);
+        output = sum(RunForwardProp(network, xi), 1);
         target = testing(1,i);
         errors = errors + ((output - target)^2);
     end
@@ -43,7 +47,7 @@ while errorSimilarity < threshold && iter < 1000
 end
 
 disp('Gradient descent completed in: ' + iter);
-result = w;
+result = Eins;
 
 end
 

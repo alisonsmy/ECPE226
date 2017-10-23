@@ -1,9 +1,9 @@
-function [ result ] = StochasticGradientDescent(training, learningRate)
+function [ result ] = StochasticGradientDescent(training, network, learningRate)
 
 [d, N] = size(training);
 
-disp("Dimension is: " + d);
-disp("Training  size: " + N);
+disp('Dimension is: ' + d);
+disp('Training  size: ' + N);
 
 run = true;
 
@@ -19,13 +19,14 @@ while run
     if iter > 1
         preGrad = grad;
     end
-    grad = GradientSignal(w, x(:,i), y(:,i));
-    %calculate average direction vector, -1/N*sum of gradients
-    %For SGD, N would be 1 because it get 1 training example at a time
-    v = -(grad/1); 
-
-    %update weight vector
-    w = w + (learningRate)*grad;
+    
+    [Ein] = TrainingSGD(network, x(i), y(i));
+    disp ('Ein: ' + string(Ein));
+    
+    for i = 1 : 3
+        network(i).updateWithGradient(learningRate);
+    end
+    
     iter = iter +1;
 
 %     % Determine if algorithm should stop
@@ -38,7 +39,7 @@ while run
     end 
 
 end
-disp("Gradient descent completed in: " + iter);
+disp('Gradient descent completed in: ' + iter);
 result = w;
 
 end
