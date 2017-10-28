@@ -39,7 +39,7 @@ network = [layer1 layer2];
 % result = BatchGradientDescent(training, testing, network, lr);
 result = StochasticGradientDescent(training, testing, network, lr);
 
-m = 1:10;
+m = 1:100;
 k = result(m);
 
 hold on;

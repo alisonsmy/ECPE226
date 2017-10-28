@@ -13,12 +13,13 @@ y = training(1, :);
 % d-1 because the first value is the result
 prevError = -1;
 iter = 1;
+Ein = 100;
 errorSimilarity = 0;
-threshold = 10;
+threshold = 20;
 
 Eins = zeros(1000, 1);
 
-while errorSimilarity < threshold && iter < 1000
+while errorSimilarity < threshold && iter < 1000 && Ein >= 0.2
     fprintf ('Iteration: ' + string(iter) + '\n');
     
     i = randi([1 N], 1); %get a random integer from 1 to N
@@ -42,7 +43,7 @@ while errorSimilarity < threshold && iter < 1000
     error = errors/(2*M);
     
     % Determine if algorithm should stop
-    if abs(error - prevError) < 10
+    if abs(error - prevError) < 0.00001
         errorSimilarity = errorSimilarity + 1;
     else
         errorSimilarity = 0;

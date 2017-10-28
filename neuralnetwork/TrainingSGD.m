@@ -19,7 +19,7 @@ function [Ein] = TrainingSGD(network, xi, yi)
         xn = [1; network(l-1).outputThetas];
         Gn = xn*deltas';
         G = network(l).gradient;
-        network(l).gradient = G + Gn;
+        network(l).gradient = G - Gn;
     end
 end
 

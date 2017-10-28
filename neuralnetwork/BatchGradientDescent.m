@@ -12,9 +12,10 @@ iter = 1;
 errorSimilarity = 0;
 threshold = 10;
 
+Ein = 100;
 Eins = zeros(1000, 1);
 
-while errorSimilarity < threshold && iter < 1000
+while errorSimilarity < threshold && iter < 1000 && Ein >= 0.2
     fprintf ('Iteration: ' + string(iter) + '\n');
     
     [Ein] = TrainingBGD(network, training);
