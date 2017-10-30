@@ -1,7 +1,7 @@
 function [ learningRate ] = LinearSearchBisection( network, input, target )
 %LINEARSEARCHBISECTION Summary of this function goes here
 %   Detailed explanation goes here
-[n1,n2,n3] = InitialUArrangement();
+[n1,n2,n3] = InitialUArrangement(network, input, target);
 netEnHat = 0;
 netE2 = 0;
 

@@ -19,27 +19,10 @@ E1 = Error(netE1, input, target);
 E2 = Error(netE2, input, target);
 
 if E2 > E1
-    n3 = 2*n2;
-else
     n1 = n2;
     n2 = 0;
     n3 = -1 * epsilon;
-end
-
-netE3 = UpdateNetwork(netE3, n3);
-E3 = Error(netE3, input, target);
-
-while E3 < E2
-    n1 = n2;
-    n2 = n3;
-    n3 = 2*n3;
-    
-    netE2 = UpdateNetwork(netE2, n2);
-    E2 = Error(netE2, input, target);
-    
-    netE3 = UpdateNetwork(netE3, n3);
-    E3 = Error(netE3, input, target);
-end
+else
 
 end
 
