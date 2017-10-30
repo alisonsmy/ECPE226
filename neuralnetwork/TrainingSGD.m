@@ -5,10 +5,10 @@ function [Ein] = TrainingSGD(network, xi, yi)
     Ein = 0;
 
     %do FWD Prop
-    output = sum(RunForwardProp(network, xi), 1);
+    output = Theta(sum(RunForwardProp(network, xi), 1));
 
     %Calculate Error
-    Ein = Ein + (1/2)*((output-yi).^2);
+    Ein = Ein + (0.5*((output-yi).^2));
 
     %Calculate gradient
     diff = (output - yi);

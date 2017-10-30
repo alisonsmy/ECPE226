@@ -11,7 +11,7 @@ raw_data = File.data;
 ones = CleanData(raw_data(:,:,1), 1);
 others = CleanData(raw_data(:,:,2:10), -1);
 
-rng(314159265);
+rng(3147159265);
 idx = randperm(N*digit);
 
 cleanedData = cat(2,ones, others);
@@ -22,8 +22,8 @@ training = cleanedData(:,401:(N*digit));
 
 lr = 0.1; % learning rates of 0.1, 1, 10, 50.
 
-theta = @(s) (1/(1 + exp(-s)));
-thetaPrime = @(x) x.*(1-x);
+theta = @(x) Theta(x);
+thetaPrime = @(x) ThetaPrime(x);
 id = @(s)s;
 
 layer1 = Layer;
