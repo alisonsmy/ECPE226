@@ -49,11 +49,10 @@ classdef Layer < handle
         end
         
         function updateWithGradient(obj, eta)
-            vt = (obj.gradient .* eta);
-            if any(isnan(vt(:)))
+            if any(isnan(A(:)))
                 fprintf('nans here!');
             end
-            obj.weights = obj.weights + vt;
+            obj.weights = obj.weights + (obj.gradient .* eta);
         end
     end
 end

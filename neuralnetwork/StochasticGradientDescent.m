@@ -1,5 +1,10 @@
 function [ result ] = StochasticGradientDescent(training, testing, network, learningRate)
 
+% ALGO CONFIG
+THRESHOLD = 20;
+MAX_ITER = 200;
+MIN_ERROR = 0.2;
+
 [d, N] = size(training);
 [~, M] = size(testing);
 [~, L] = size(network);
@@ -14,30 +19,31 @@ y = training(1, :);
 prevError = -1;
 iter = 1;
 errorSimilarity = 0;
-threshold = 20;
+error = zeros(1000, 1);
+Eins = zeros(1000,1);
+run = true;
 
-error = ones(1000, 1);
-
-while errorSimilarity < threshold && iter < 200 && error(iter) >= 0.02
+while run
     fprintf ('Iteration: ' + string(iter) + '\n');
     
     i = randi([1 N], 1); %get a random integer from 1 to N
     [Ein] = TrainingSGD(network, x(:,i), y(i));
-    
-    for i = 1 : L
-        network(i).updateWithGradient(learningRate);
-    end
+    Eins(iter) = Ein;
+    fprintf('Ein: ' + string(Eins(iter)) + '\n');
+    learningRate = LinearSearchBisection(network, x(:,i), y(i));
+    UpdateNetwork(network, learningRate);
     
     % Calculate Error
     errors = 0;
     for i = 1:M
         xi = testing(3:d,i);
-        output = Theta(sum(RunForwardProp(network, xi), 1));
-        target = testing(1,i);
-        errors = errors + ((output - target)^2);
+        if isnan(xi(2))
+            fprintf('here nan!');
+        end
+        errors = errors + Error(network, xi,testing(1,i));
     end
-    error(iter) = errors/(2*M);
-    fprintf('Error: ' + string(error(iter)) + '\n');
+    error(iter) = errors/M;
+    fprintf('Eout: ' + string(error(iter)) + '\n');
     
     % Determine if algorithm should stop
     if abs(error(iter) - prevError) < 0.00001
@@ -48,9 +54,15 @@ while errorSimilarity < threshold && iter < 200 && error(iter) >= 0.02
     
     iter = iter + 1;
     prevError = error(iter);
+    
+    thresh = errorSimilarity < THRESHOLD;
+    maxIter = iter < MAX_ITER;
+    minError = Eins(iter - 1) >= MIN_ERROR;
+    
+    run = thresh && maxIter && minError;
 end
 disp('Gradient descent completed in: ' + iter);
-result = error;
+result = Eins;
 
 end
 

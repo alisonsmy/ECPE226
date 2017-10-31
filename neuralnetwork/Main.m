@@ -9,7 +9,7 @@ raw_data = File.data;
 [img, N, digit] = size(raw_data);
 
 ones = CleanData(raw_data(:,:,1), 1);
-others = CleanData(raw_data(:,:,2:10), -1);
+others = CleanData(raw_data(:,:,2:10), 0);
 
 rng(3147159265);
 idx = randperm(N*digit);

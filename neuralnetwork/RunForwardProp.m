@@ -9,7 +9,11 @@ for i = 1:L
     input = network(i).forward(input);
 end
 
-output = input;
+output = Theta(input(2));
+
+if isnan(output)
+    fprintf('here!');
+end
 
 end
 

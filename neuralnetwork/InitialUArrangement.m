@@ -6,13 +6,12 @@ n1 = 0;
 n2 = epsilon;
 n3 = 0;
 
-netE1 = 0;
-netE2 = 0;
-netE3 = 0;
+netE1 = network.copy();
+netE2 = network.copy();
+netE3 = network.copy();
 
 % Copy network to prevent actual changes
-copyobj(network, [netE1, netE2, netE3]);
-netE1 = UpdateNetwork(netEnHat, n1);
+netE1 = UpdateNetwork(netE1, n1);
 netE2 = UpdateNetwork(netE2, n2);
 
 E1 = Error(netE1, input, target);

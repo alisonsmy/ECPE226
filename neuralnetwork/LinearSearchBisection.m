@@ -12,10 +12,17 @@ perterb = 0.1;
 while abs(n3 - n1) > tolerance && iter < 20
     
     nHat = 0.5*(n1 + n3);
+    
     % Copy network to prevent actual changes
-    copyobj(network, [netEnHat, netE2]);
+    netEnHat = network.copy();
+    netE2 = network.copy();
+    
     netEnHat = UpdateNetwork(netEnHat, nHat);
     netE2 = UpdateNetwork(netE2, n2);
+    
+    if nHat == n2
+        nHat = nHat + perterb;
+    end
     
     if nHat < n2
         En = Error(netEnHat, input, target);
@@ -33,11 +40,9 @@ while abs(n3 - n1) > tolerance && iter < 20
             n1 = n2;
             n3 = n2;
             n2 = nHat;
-        elseif En > E2
+        else
             n3 = nHat;
         end
-    else 
-        nHat = nHat + perterb;
     end
 end
 
