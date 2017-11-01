@@ -14,8 +14,8 @@ while abs(n3 - n1) > tolerance && iter < 20
     nHat = 0.5*(n1 + n3);
     
     % Copy network to prevent actual changes
-    netEnHat = network.copy();
-    netE2 = network.copy();
+    netEnHat = CopyNetwork(network);
+    netE2 = CopyNetwork(network);
     
     netEnHat = UpdateNetwork(netEnHat, nHat);
     netE2 = UpdateNetwork(netE2, n2);

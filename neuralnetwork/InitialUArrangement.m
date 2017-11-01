@@ -6,9 +6,9 @@ n1 = 0;
 n2 = epsilon;
 n3 = 0;
 
-netE1 = network.copy();
-netE2 = network.copy();
-netE3 = network.copy();
+netE1 = CopyNetwork(network);
+netE2 = CopyNetwork(network);
+netE3 = CopyNetwork(network);
 
 % Copy network to prevent actual changes
 netE1 = UpdateNetwork(netE1, n1);
