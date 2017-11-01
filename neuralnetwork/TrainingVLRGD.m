@@ -1,7 +1,11 @@
-function [network] = TrainingVLRGD(training, testing, network, lr)
+function [ Eins ] = TrainingVLRGD(training, testing, network, lr)
     % For variable learning rate, you will need to compare two errors.
     % The error of the network with its current weights – this error will be the one you’ve already calculated in the stochastic algorithm.
     % The error of the network with the possible future weights (w(t+1) = w(t) - lr*g(t)).
+    
+    [d, N] = size(training);
+    [~, M] = size(testing);
+    [~, L] = size(network);
     
     % The error of the network with its current weights
     CurrentEr = StochasticGradientDescent(training, testing, network, lr);
@@ -12,8 +16,8 @@ function [network] = TrainingVLRGD(training, testing, network, lr)
     prevError = -1;
     errorSimilarity = 0;
     threshold = 20;
-    
-    while errorSimilarity < threshold && iter < 1000 && Ein >= 0.2
+    Eins = zeros(1000,1);
+    while errorSimilarity < threshold && t < 1000
         for l = L:-1:2
             % The gradient is calculated from the sensitivities we calculate in back-propagation
             g = network(l).deltas(t, :);
@@ -24,9 +28,11 @@ function [network] = TrainingVLRGD(training, testing, network, lr)
             if ErNext < CurrentEr(t, :)
                network(l).weights(t+t, :) = measure;
                lr = a*lr;
+               Eins(iter) = ErNext;
             else
                network(l).weights(t+1, :) = network(l).weights(t, :);
                lr = B*lr;
+               Eins(iter) = CurrentEr(t, :);
             end
         end
          t = t + 1;
