@@ -1,27 +1,40 @@
-function [w] = TrainingVLRGD(training, testing, network, lr)
-    %UNTITLED3 Summary of this function goes here
-    %   Detailed explanation goes here
-    Eins = StochasticGradientDescent(training, testing, network, lr);
-    g = zeros(1000, 1);
-    v = zeros(1000, 1);
+function [ Eins ] = TrainingVLRGD(training, testing, network, lr)
+    % For variable learning rate, you will need to compare two errors.
+    % The error of the network with its current weights – this error will be the one you’ve already calculated in the stochastic algorithm.
+    % The error of the network with the possible future weights (w(t+1) = w(t) - lr*g(t)).
+    
+    [d, N] = size(training);
+    [~, M] = size(testing);
+    [~, L] = size(network);
+    
+    % The error of the network with its current weights
+    CurrentEr = StochasticGradientDescent(training, testing, network, lr);
+
     a = 1;  %1.05 <= a <= 1.1
     B = 0.7; %.5 <= B <= .8
-    VLR = 0; %n0
     t = 0;
     prevError = -1;
     errorSimilarity = 0;
     threshold = 20;
-    while errorSimilarity < threshold && iter < 1000 && Ein >= 0.2
-        g(t, :) = Eins(t, :);
-        v(t, :) = -(g(t, :));
-        index = wt + VLR*v(t, :);
-        if Eins(index, :) < Eins(wt, :)
-           network(1).weights(t+t, :) = index;
-           VLR = a*VLR;
-        else
-           network(1).weights(t+1, :) = wt;
-           VLR = B*VLR;
-        end      
+    Eins = zeros(1000,1);
+    while errorSimilarity < threshold && t < 1000
+        for l = L:-1:2
+            % The gradient is calculated from the sensitivities we calculate in back-propagation
+            g = network(l).deltas(t, :);
+            % w(t) - lr*g(t))
+            measure = network(l).weights(t,:) - lr*g;
+            % The error of the network with the possible future weights
+            ErNext = Error(network, measure, testing(1,t));
+            if ErNext < CurrentEr(t, :)
+               network(l).weights(t+t, :) = measure;
+               lr = a*lr;
+               Eins(iter) = ErNext;
+            else
+               network(l).weights(t+1, :) = network(l).weights(t, :);
+               lr = B*lr;
+               Eins(iter) = CurrentEr(t, :);
+            end
+        end
          t = t + 1;
          
         % Calculate Error
@@ -40,8 +53,6 @@ function [w] = TrainingVLRGD(training, testing, network, lr)
             errorSimilarity = 0;
         end
         prevError = error;
-        
     end
-
 end
 

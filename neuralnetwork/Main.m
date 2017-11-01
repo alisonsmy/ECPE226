@@ -37,8 +37,8 @@ network = [layer1 layer2];
 %Run 10 times each for each rate
 
 % result = BatchGradientDescent(training, testing, network, lr);
-result = StochasticGradientDescent(training, testing, network, lr);
-
+% result = StochasticGradientDescent(training, testing, network, lr);
+result = TrainingVLRGD(training, testing, network, lr);
 m = 1:100;
 k = result(m);
 
