@@ -5,6 +5,7 @@
 % HW5 - Fuzzy Logic
 
 File = load('usps_modified.mat');
+% File = load('usps_test.mat');
 raw_data = File.data;
 [img, N, digit] = size(raw_data);
 
@@ -20,8 +21,9 @@ cleanedData = cleanedData(:,idx);
 testing = cleanedData(:,1:400);
 training = cleanedData(:,401:(N*digit));
 
-
-%data = rand(100,2);
+% open fcmdemo -> 558-591 shows how to display membership func graphically
+% open fcm -> following sample code for using fcm
+% data = rand(100,2);
 [center,U,obj_fcn] = fcm(training,2);
 plot(ones(3,:), ones(4,:),'o');
 plot(others(3,:), others(4,:),'x');
