@@ -12,12 +12,12 @@ oneValues = CleanData(raw_data(:,:,1), 1);
 clusters = containers.Map;
 classifications = containers.Map;
 
-for i = 2:3
+for i = 2:10
     others = CleanData(raw_data(:,:,i), 0);
     numbers = -1*[ oneValues(3:4,:) others(3:4,:)];
     [~, N] = size(numbers);
 
-    options = [10 15 0.01 1];
+    options = [5 100 0.001 1];
     [U, cs] = fcm(numbers, 2, options);
     
     cluster1 = num2str(2*i);
@@ -38,7 +38,13 @@ for i = 2:3
         m.Cluster2Membership = U(2,j);
         x = numbers(1, j);
         y = numbers(2, j);
-        classifications(CoordsToString(x,y)) = m;
+        key = CoordsToString(x,y);
+        if isKey(classifications, key)
+            c = classifications(key);
+            classifications(key) = [m; c];
+        else
+            classifications(key) = [m];
+        end
     end
 end
 
@@ -59,23 +65,48 @@ for i = length(k)
     clusters(key{1}) = c;
 end
 
+for k = keys(classifications)
+    c = classifications(k{1});
+    v = UnionClassify(clusters, c);
+    classifications(k{1}) = v;
+end
+
+[~, N] = size(numbers);
+colors = zeros(N, 1);
+for i = 1 : N
+    n = numbers(:, i);
+    x = n(1);
+    y = n(2);
+    c = classifications(CoordsToString(x,y));
+    colors(i) = c;
+end
+
 figure;
 hold on;
 axis([-1 1 -1 1]);
 ax = gca;
 ax.XAxisLocation = 'origin';
 ax.YAxisLocation = 'origin';
+scatter(numbers(1,:),numbers(2,:),25,colors','filled');
 
-%     figure;
-%     hold on;
-%     axis([-1 1 -1 1]);
-%     ax = gca;
-%     ax.XAxisLocation = 'origin';
-%     ax.YAxisLocation = 'origin';
-%     plot(numbers(2,index1),numbers(1,index1),'ob')
-%     hold on
-%     plot(numbers(2,index2),numbers(1,index2),'or')
-%     hold off
+% Normal FCM
+
+[U, centers] = fcm(numbers,2);
+
+maxU = max(U);
+index1 = find(U(1,:) == maxU);
+index2 = find(U(2,:) == maxU);
+
+figure;
+hold on;
+axis([-1 1 -1 1]);
+ax = gca;
+ax.XAxisLocation = 'origin';
+ax.YAxisLocation = 'origin';
+plot(numbers(2,index1),numbers(1,index1),'ob')
+hold on
+plot(numbers(2,index2),numbers(1,index2),'or')
+hold off
 
 
 

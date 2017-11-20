@@ -1,0 +1,9 @@
+function [ result ] = UnionClassify( clusters, classes )
+%UNIONCLASSIFY Summary of this function goes here
+%   Detailed explanation goes here
+for i = 1 : length(classes)
+    for v = 1
+end
+
+end
+
