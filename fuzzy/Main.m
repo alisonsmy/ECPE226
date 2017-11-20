@@ -12,6 +12,9 @@ oneValues = getFeatures(raw_data(:,:,1));
 clusters = containers.Map;
 classifications = containers.Map;
 
+rng('default');
+rng(376971);
+
 % Collect classifications for 1 vs others
 for i = 2:10
     others = getFeatures(raw_data(:,:,i));
@@ -108,23 +111,23 @@ ax.XAxisLocation = 'origin';
 ax.YAxisLocation = 'origin';
 scatter(numbers(:, 1),numbers(:,2),25,colors,'filled');
 
-% Normal FCM
-[~, U] = fcm(numbers,2);
-
-maxU = max(U);
-index1 = find(U(1,:) == maxU);
-index2 = find(U(2,:) == maxU);
-
-figure;
-hold on;
-axis([-1 1 -1 1]);
-ax = gca;
-ax.XAxisLocation = 'origin';
-ax.YAxisLocation = 'origin';
-plot(numbers(index1, 1),numbers(index1, 2),'ob')
-hold on
-plot(numbers(index2,1),numbers(index2, 2),'or')
-hold off
+% % Normal FCM
+% [~, U] = fcm(numbers,2);
+% 
+% maxU = max(U);
+% index1 = find(U(1,:) == maxU);
+% index2 = find(U(2,:) == maxU);
+% 
+% figure;
+% hold on;
+% axis([-1 1 -1 1]);
+% ax = gca;
+% ax.XAxisLocation = 'origin';
+% ax.YAxisLocation = 'origin';
+% plot(numbers(index1, 1),numbers(index1, 2),'ob')
+% hold on
+% plot(numbers(index2,1),numbers(index2, 2),'or')
+% hold off
 
 
 

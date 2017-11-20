@@ -16,9 +16,9 @@ for i = 1 : length(classes)
 end
 
 if class1Count > class2Count
-    result = 'b';
-else 
     result = 'r';
+else 
+    result = 'b';
 end
 
 end
