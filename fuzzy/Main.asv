@@ -40,32 +40,7 @@ for i = 2:3
         y = numbers(2, j);
         classifications(CoordsToString(x,y)) = m;
     end
-end
-
-centers = [];
-k = keys(clusters);
-for i = 1:length(k)
-    key = k(i);
-    c = clusters(key{1}).Center;
-    centers = [c centers];
-end
-
-T = clusterdata(centers','Maxclust',2);
-
-for i = length(k)
-    key = k(i);
-    c = clusters(key{1});
-    c.NumberCat = T(i);
-    clusters(key{1}) = c;
-end
-
-figure;
-hold on;
-axis([-1 1 -1 1]);
-ax = gca;
-ax.XAxisLocation = 'origin';
-ax.YAxisLocation = 'origin';
-
+       
 %     figure;
 %     hold on;
 %     axis([-1 1 -1 1]);
@@ -76,6 +51,24 @@ ax.YAxisLocation = 'origin';
 %     hold on
 %     plot(numbers(2,index2),numbers(1,index2),'or')
 %     hold off
+end
+
+figure;
+hold on;
+axis([-1 1 -1 1]);
+ax = gca;
+ax.XAxisLocation = 'origin';
+ax.YAxisLocation = 'origin';
+
+cs = keys(clusters);
+centers = [];
+for i = 1:length(clusters)
+    c = clusters(cs(i);
+end
+
+centers = arrayfun(@(x) x.Center, centers);
+T = clusterdata(centers,'Maxclust',2);
+scatter(centers(:,1),centers(:,2),100,T,'filled');
 
 
 
