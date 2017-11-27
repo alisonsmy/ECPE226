@@ -8,10 +8,12 @@
 %   * Mating/Variation: Single Point Binary Crossover
 
 %initialize parameters
-pop = 200;
 gen = 200;
-precision = 8;
+pop = 40;
 parents = pop/2;
+trials = 200;
+precision = 8;
+
 
 %generate random initial population
 candidate.binx = rand(pop,precision)>0.5;                   %generate binary representation
