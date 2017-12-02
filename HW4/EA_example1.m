@@ -29,10 +29,7 @@ for i = 1:gen
        candidate.fit(j) = exp(-((candidate.x(j)-3)^2+(candidate.y(j)-3)^2)/5) + 0.8*exp(-(candidate.x(j)^2+(candidate.y(j)+3)^2)/5) + 0.2*(cos(candidate.x(j)*pi/2)+cos(candidate.y(j)*pi/2)) + 0.5; 
    end
    
-   %select parents - method here is rank selection; purely elitist
-   [~,I] = sort(candidate.fit,'descend');
-   newcand.binx(1:parents,:) = candidate.binx(I(1:parents),:);
-   newcand.biny(1:parents,:) = candidate.biny(I(1:parents),:);
+   newcand = ElitistSelection(candidate, parents);
    
    scatter(i,candidate.fit(I(1)));
    drawnow
@@ -40,12 +37,6 @@ for i = 1:gen
    %create offspring - method is elitist, create 2 offspring from top 100
    % parents (#1 mates with #51, #2 with #52, etc.)
    for j = 1:parents/2
-%        crosspoint = randi([1 precision],1,1); %single point crossover
-%        newcand.binx(parents+2*j-1,:) = [newcand.binx(j,1:crosspoint),newcand.binx(j+parents/2,crosspoint+1:precision)];
-%        newcand.binx(parents+2*j,:) = [newcand.binx(j+parents/2,1:crosspoint),newcand.binx(j,crosspoint+1:precision)];
-%        crosspoint = randi([1 precision],1,1);
-%        newcand.biny(parents+2*j-1,:) = [newcand.biny(j,1:crosspoint),newcand.biny(j+parents/2,crosspoint+1:precision)];
-%        newcand.biny(parents+2*j,:) = [newcand.biny(j+parents/2,1:crosspoint),newcand.biny(j,crosspoint+1:precision)];
         p1x = newcand.binx(j,:);
         p1y = newcand.biny(j,:);
         p2x = newcand.binx(j+parents/2, :);
