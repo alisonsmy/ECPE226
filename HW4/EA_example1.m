@@ -40,12 +40,21 @@ for i = 1:gen
    %create offspring - method is elitist, create 2 offspring from top 100
    % parents (#1 mates with #51, #2 with #52, etc.)
    for j = 1:parents/2
-       crosspoint = randi([1 precision],1,1); %single point crossover
-       newcand.binx(parents+2*j-1,:) = [newcand.binx(j,1:crosspoint),newcand.binx(j+parents/2,crosspoint+1:precision)];
-       newcand.binx(parents+2*j,:) = [newcand.binx(j+parents/2,1:crosspoint),newcand.binx(j,crosspoint+1:precision)];
-       crosspoint = randi([1 precision],1,1);
-       newcand.biny(parents+2*j-1,:) = [newcand.biny(j,1:crosspoint),newcand.biny(j+parents/2,crosspoint+1:precision)];
-       newcand.biny(parents+2*j,:) = [newcand.biny(j+parents/2,1:crosspoint),newcand.biny(j,crosspoint+1:precision)];
+%        crosspoint = randi([1 precision],1,1); %single point crossover
+%        newcand.binx(parents+2*j-1,:) = [newcand.binx(j,1:crosspoint),newcand.binx(j+parents/2,crosspoint+1:precision)];
+%        newcand.binx(parents+2*j,:) = [newcand.binx(j+parents/2,1:crosspoint),newcand.binx(j,crosspoint+1:precision)];
+%        crosspoint = randi([1 precision],1,1);
+%        newcand.biny(parents+2*j-1,:) = [newcand.biny(j,1:crosspoint),newcand.biny(j+parents/2,crosspoint+1:precision)];
+%        newcand.biny(parents+2*j,:) = [newcand.biny(j+parents/2,1:crosspoint),newcand.biny(j,crosspoint+1:precision)];
+        p1x = newcand.binx(j,:);
+        p1y = newcand.biny(j,:);
+        p2x = newcand.binx(j+parents/2, :);
+        p2y = newcand.biny(j+parents/2, :);
+        [child1, child2] = SinglePointCrossOver(p1x, p2x, p2x, p2y, precision);
+        newcand.binx(parents+2*j-1, :) = child1.binx;
+        newcand.biny(parents+2*j-1, :) = child1.biny;
+        newcand.binx(parents+2*j, :) = child2.binx;
+        newcand.biny(parents+2*j, :) = child2.biny;
    end
    
    %convert children to real values [-5,5]
