@@ -15,6 +15,7 @@ trials = 200;
 precision = 8;
 selection = @ElitistSelection;
 repo = @SinglePointCrossOver;
-policy = @PlusReproduction;
+% policy = @PlusReproduction;
+policy = @CommaReproduction;
 
 EvolutionaryAlgorithm(gen, pop, parents, precision, selection, repo, policy);

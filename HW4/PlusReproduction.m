@@ -1,4 +1,4 @@
-function [ newcand ] = PlusReproduction( newcand, parents, precision, ReproductionMethod)
+function [ newcand ] = PlusReproduction( newcand, parents, precision, pop, ReproductionMethod)
 %PLUSREPRO Summary of this function goes here
 %   Detailed explanation goes here
    for j = 1:parents/2
@@ -12,6 +12,9 @@ function [ newcand ] = PlusReproduction( newcand, parents, precision, Reproducti
         newcand.binx(parents+2*j, :) = child2.binx;
         newcand.biny(parents+2*j, :) = child2.biny;
    end
+   
+   newcand.x = 10*(bi2de(newcand.binx)/(2^precision-1))-5;
+   newcand.y = 10*(bi2de(newcand.biny)/(2^precision-1))-5;
 
 end
 
