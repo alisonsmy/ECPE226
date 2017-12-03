@@ -8,13 +8,19 @@ function [newcand, I] = LinearRanking(candidate, parents)
       prop(:, i) = (etaplus - (((etaplus-etaminus)*(i-1))/(parents-1)))/parents;
    end
    pick = 1*rand(1,1);
+   
    j = 1;
-   for i = 1:n
+   i = 1;
+   while i < n && j < parents
         if prop(:, i) >= pick
             newcand.binx(j,:) = candidate.binx(I(i),:);
             newcand.biny(j,:) = candidate.biny(I(i),:);
             j = j + 1;
         end
+        i = i + 1;
+   end
+   if j ~= parents
+       disp("do not have enough candidate!");
    end
 end
 
