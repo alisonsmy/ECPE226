@@ -13,9 +13,17 @@ pop = 40;
 parents = pop/2;
 trials = 200;
 precision = 8;
+
+% Selection Method:
 selection = @ElitistSelection;
-repo = @SinglePointCrossOver;
-% policy = @PlusReproduction;
-policy = @CommaReproduction;
+% selection = @Tourament;
+
+% Reproduction Strategy:
+% repo = @SinglePointCrossOver;
+repo = @UniformCrossOver;
+
+% Mu Lambda policy:
+policy = @PlusReproduction;
+% policy = @CommaReproduction;
 
 EvolutionaryAlgorithm(gen, pop, parents, precision, selection, repo, policy);
