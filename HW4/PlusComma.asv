@@ -1,0 +1,12 @@
+function [ f ] = PlusComma( precision, mu)
+    f = 
+    [newcand, I] = ElitistSelection(candidate, parents);
+    filler = RandomPop(parents - (newcand
+   
+end
+
+function [ newcand, I ] = impl( candidate, parents, precision)
+    [newcand, I] = ElitistSelection(candidate, parents);
+    filler = RandomPop(parents - (newcand
+   
+end

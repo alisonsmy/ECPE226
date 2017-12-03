@@ -1,8 +1,10 @@
-function [ newcand, I ] = PlusComma( candidate, parents )
-   [~,I] = sort(candidate.fit,'descend');
-    
-   newcand.binx(1:parents,:) = candidate.binx(I(1:parents),:);
-   newcand.biny(1:parents,:) = candidate.biny(I(1:parents),:);
-   
+function [ f ] = PlusComma( precision, mu)
+    f = @(x,y) impl(x,y,precision, mu);  
 end
 
+function [ newcand, I ] = impl( candidate, parents, precision, mu)
+    [newcand, I] = ElitistSelection(candidate, mu);
+    filler = RandomPop(parents - mu, precision);
+    newcand = [ newcand filler ]
+   
+end
