@@ -7,7 +7,7 @@ function [newcand, I] = LinearRanking(candidate, parents)
    for i = 1:parents
       prop(i) = (etaplus - (((etaplus-etaminus)*(i-1))/(parents-1)))/parents;
    end
-   pick = randi([0 1], 1, 1);
+   pick = 1+(parents-1).*rand(100, 1);
    j = 1;
    for i = 1:parents
        if prop(i) >= pick

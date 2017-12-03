@@ -5,8 +5,11 @@ function [ newcand, I ] = Proportional( candidate, parents )
    index = zeros(parents, 1);
    for i = 1:parents
       prop(i) = candidate.fit(i)/total;
+      if i ~= 1
+         prop(i) = prop(i-1)+prop(i); 
+      end
    end
-   pick = randi([0 1], 1, 1);
+   pick = 1+(parents-1).*rand(100, 1);
    j = 1;
    for i = 1:parents
        if prop(i) >= pick
