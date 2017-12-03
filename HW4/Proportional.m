@@ -1,23 +1,28 @@
 function [ newcand, I ] = Proportional( candidate, parents )
-   [~,I] = sort(candidate.fit,'ascend');
-   total = sum(candidate.fit(1:parents,:));
-   prop = zeros(parents, 1);
-   index = zeros(parents, 1);
-   for i = 1:parents
-      prop(i) = candidate.fit(i)/total;
+   [~,I] = sort(candidate.fit);
+   total = sum(I);
+   [m, n] = size(I);
+   prop = zeros(m, n);
+   for i = 1:n
+      prop(:, i) = I(:, i)/total;
       if i ~= 1
-         prop(i) = prop(i-1)+prop(i); 
+         prop(:, i) = prop(:, i-1)+prop(:, i); 
       end
    end
-   pick = 1+(parents-1).*rand(100, 1);
+   pick = 1*rand(1,1);
+
    j = 1;
-   for i = 1:parents
-       if prop(i) >= pick
-          index(j) = i;
-          j = j + 1;
-       end
+   i = 1;
+   while i < n && j < parents
+        if prop(:, i) >= pick
+            newcand.binx(j,:) = candidate.binx(I(i),:);
+            newcand.biny(j,:) = candidate.biny(I(i),:);
+            j = j + 1;
+        end
+        i = i + 1;
    end
-   newcand.binx(1:parents,:) = candidate.binx(index(1:parents),:);
-   newcand.biny(1:parents,:) = candidate.biny(index(1:parents),:);
+   if j ~= parents
+       disp("do not have enough candidate!");
+   end
 end
 
