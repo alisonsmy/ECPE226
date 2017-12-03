@@ -1,15 +1,14 @@
 function [ newcand, I ] = Proportional( candidate, parents )
    [~,I] = sort(candidate.fit,'ascend');
-   total = sum(candidate.fit);
-   [m, n] = size(I);
-   prop = zeros(m, n);
-   index = zeros(m, n);
-   for i = 1:I
+   total = sum(candidate.fit(1:parents,:));
+   prop = zeros(parents, 1);
+   index = zeros(parents, 1);
+   for i = 1:parents
       prop(i) = candidate.fit(i)/total;
    end
    pick = randi([0 1], 1, 1);
    j = 1;
-   for i = 1:I
+   for i = 1:parents
        if prop(i) >= pick
           index(j) = i;
           j = j + 1;

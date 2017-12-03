@@ -1,7 +1,7 @@
-function [outputArg1,outputArg2] = Tourament(inputArg1,inputArg2)
-%UNTITLED4 Summary of this function goes here
-%   Detailed explanation goes here
-outputArg1 = inputArg1;
-outputArg2 = inputArg2;
+function [newcand, I] = Tourament( candidate, parents )
+   [~,I] = sort(candidate.fit,'descend');
+   
+   newcand.binx(1:parents,:) = candidate.binx(I(1:parents),:);
+   newcand.biny(1:parents,:) = candidate.biny(I(1:parents),:);
 end
 
