@@ -1,21 +1,20 @@
 function [newcand, I] = LinearRanking(candidate, parents)
    etaplus = 1.5;
    etaminus = 2 - etaplus;
-   [~,I] = sort(candidate.fit,'descend');
-   prop = zeros(parents, 1);
-   index = zeros(parents, 1);
+   [~,I] = sort(candidate.fit);
+   [m, n] = size(I);
+   prop = zeros(m, n);
    for i = 1:parents
-      prop(i) = (etaplus - (((etaplus-etaminus)*(i-1))/(parents-1)))/parents;
+      prop(:, i) = (etaplus - (((etaplus-etaminus)*(i-1))/(parents-1)))/parents;
    end
-   pick = 1+(parents-1).*rand(100, 1);
+   pick = 1*rand(1,1);
    j = 1;
-   for i = 1:parents
-       if prop(i) >= pick
-          index(j) = i;
-          j = j + 1;
-       end
+   for i = 1:n
+        if prop(:, i) >= pick
+            newcand.binx(j,:) = candidate.binx(I(i),:);
+            newcand.biny(j,:) = candidate.biny(I(i),:);
+            j = j + 1;
+        end
    end
-   newcand.binx(1:parents,:) = candidate.binx(index(1:parents),:);
-   newcand.biny(1:parents,:) = candidate.biny(index(1:parents),:);
 end
 

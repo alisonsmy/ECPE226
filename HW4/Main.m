@@ -14,4 +14,4 @@ parents = pop/2;
 trials = 200;
 precision = 8;
 
-EvolutionaryAlgorithm(gen, pop, parents, precision, @ElitistSelection, @SinglePointCrossOver);
+EvolutionaryAlgorithm(gen, pop, parents, precision, @Proportional, @SinglePointCrossOver);

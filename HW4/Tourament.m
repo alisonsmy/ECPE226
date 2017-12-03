@@ -3,9 +3,9 @@ function [newcand, I] = Tourament( candidate, parents )
     rng('shuffle');
     for i = 1:parents
         rng(1);
-        pick1 = 1+(parents-1).*rand(100, 1);
+        pick1 = randi([1 parents], 1, 1);
         rng(2);
-        pick2 = 1+(parents-1).*rand(100, 1);
+        pick2 = randi([1 parents], 1, 1);
 
         % without replacement
         if candidate.binx(I(pick1),:) >= candidate.binx(I(pick2),:)
