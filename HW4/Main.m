@@ -12,7 +12,7 @@ trials = 200;
 precision = 8;
 
 % SELCTION METHOD:
-% selection = @ElitistSelection;
+selection = @ElitistSelection;
 % selection = @Tourament;
 % selection = @Proportional;
 % selection = @LinearRanking;
@@ -22,7 +22,11 @@ repo = @SinglePointCrossOver;
 % repo = @UniformCrossOver;
 
 % MU LAMBDA POLICY:
-policy = @PlusReproduction;
-% policy = @CommaReproduction;
+% policy = @PlusReproduction;
+policy = @CommaReproduction;
 
-EvolutionaryAlgorithm(gen, pop, parents, precision, selection, repo, policy);
+figure; hold on;
+for i = 1:200
+    best = EvolutionaryAlgorithm(gen, pop, parents, precision, selection, repo, policy);
+    scatter(i, mean(best));
+end
