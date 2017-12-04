@@ -22,8 +22,8 @@ repo = @SinglePointCrossOver;
 % repo = @UniformCrossOver;
 
 % MU LAMBDA POLICY:
-% policy = @PlusReproduction;
-policy = @CommaReproduction;
+policy = @PlusReproduction;
+% policy = @CommaReproduction;
 
 figure; hold on;
 for i = 1:200
