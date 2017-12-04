@@ -1,4 +1,4 @@
-function [newcand, I] = LinearRanking(candidate, parents)
+function [newcand] = LinearRanking(candidate, parents)
    etaplus = 1.5;
    etaminus = 2 - etaplus;
    [~,I] = sort(candidate.fit);

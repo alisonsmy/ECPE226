@@ -1,10 +1,8 @@
-function [newcand, I] = Tourament( candidate, parents )
+function [newcand] = Tourament( candidate, parents )
     [~,I] = sort(candidate.fit,'descend');
     rng('shuffle');
     for i = 1:parents
-        rng(1);
         pick1 = randi([1 parents], 1, 1);
-        rng(2);
         pick2 = randi([1 parents], 1, 1);
 
         % without replacement

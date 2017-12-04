@@ -1,4 +1,4 @@
-function [ newcand, I ] = ElitistSelection( candidate, parents )
+function [ newcand] = ElitistSelection( candidate, parents )
 %ELITISTSELECTION Summary of this function goes here
 %   Detailed explanation goes here
    [~,I] = sort(candidate.fit,'descend');

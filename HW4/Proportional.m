@@ -1,4 +1,4 @@
-function [ newcand, I ] = Proportional( candidate, parents )
+function [ newcand ] = Proportional( candidate, parents )
    [~,I] = sort(candidate.fit);
    total = sum(I);
    [m, n] = size(I);
