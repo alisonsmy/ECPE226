@@ -7,22 +7,22 @@
 %   * Selection: Elitist, Rank Selection
 %   * Mating/Variation: Single Point Binary Crossover
 
-%initialize parameters
+% NUMERICAL PARAMETERS
 gen = 200;
 pop = 40;
 parents = pop/2;
 trials = 200;
 precision = 8;
 
-% Selection Method:
+% SELCTION METHOD:
 selection = @ElitistSelection;
 % selection = @Tourament;
 
-% Reproduction Strategy:
+% REPRODUCTION STRATEGY:
 % repo = @SinglePointCrossOver;
 repo = @UniformCrossOver;
 
-% Mu Lambda policy:
+% MU LAMBDA POLICY:
 policy = @PlusReproduction;
 % policy = @CommaReproduction;
 
