@@ -17,6 +17,7 @@ precision = 8;
 % SELCTION METHOD:
 selection = @ElitistSelection;
 % selection = @Tourament;
+% selection = @Proportional;
 
 % REPRODUCTION STRATEGY:
 % repo = @SinglePointCrossOver;
