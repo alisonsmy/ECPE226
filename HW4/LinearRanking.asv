@@ -4,25 +4,24 @@ function [newcand] = LinearRanking(candidate, parents)
    [~,I] = sort(candidate.fit);
    [m, n] = size(candidate.fit);
    prop = zeros(m, n);
-   for i = 1:n
-      prop(:, i) = (etaplus - (((etaplus-etaminus)*(i-1))/(n-1)))/n;
+   
+   for i = 1:parents
+      prop(:, i) = (etaplus - (((etaplus-etaminus)*(i-1))/(parents-1)))/parents;
    end
    
    j = 1;
    i = 1;
    while j < parents
-        pick = rand(1,1);
+        pick = 1*rand(1,1);
+        if i > n
+            i = 1;
+        end
         if prop(:, i) >= pick
             newcand.binx(j,:) = candidate.binx(I(:, i),:);
             newcand.biny(j,:) = candidate.biny(I(:, i),:);
             j = j + 1;
-            i = 1;
-        else
-            i = i + 1;
-            if i > n
-                i = 1;
-            end
         end
+        i = i + 1;
    end
 end
 

@@ -1,6 +1,5 @@
 function [ newcand ] = PlusReproduction( newcand, parents, precision, pop, ReproductionMethod)
-%PLUSREPRO Summary of this function goes here
-%   Detailed explanation goes here
+
    for j = 1:parents/2
         p1x = newcand.binx(j,:);
         p1y = newcand.biny(j,:);
