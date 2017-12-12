@@ -12,14 +12,14 @@ trials = 200;
 precision = 8;
 
 % SELCTION METHOD:
-selection = @ElitistSelection;
-% selection = @Tourament;
+% selection = @ElitistSelection;
+selection = @Tournament;
 % selection = @Proportional;
 % selection = @LinearRanking;
 
 % REPRODUCTION STRATEGY:
-repo = @SinglePointCrossOver;
-% repo = @UniformCrossOver;
+% repo = @SinglePointCrossOver;
+repo = @UniformCrossOver;
 
 % MU LAMBDA POLICY:
 policy = @PlusReproduction;

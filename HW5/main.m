@@ -1,8 +1,7 @@
-pop = 3;
+pop = 40;
 
-points = rand(2,pop);
-colors = zeros(pop, 1);
+points = rand(pop, 2);
 
 result = Naive(points, 0);
 
-scatter(points(1,:), points(2,:), 25, points(4,:));
+scatter(result(:,1), result(:, 2), 25, result(:,4), 'filled');
