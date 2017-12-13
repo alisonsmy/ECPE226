@@ -11,20 +11,22 @@
 % figure;
 % scatter(result2(:,1), result2(:, 2), 25, result2(:,4), 'filled');
 
-n = zeros(1,5);
-k = zeros(1,5);
+n = zeros(200,5);
+k = zeros(200,5);
 for m = 1:5
-    points = rand(m*40, 2);
-    
-    tic; % Test Naive
-    result = Naive(points, 0);
-    n(m) = toc;
-    
-    tic; % Test Kung
-    result = Naive(points, 0);
-    k(m) = toc;
+    for i = 1:200
+        points = rand(m*40, 2);
+
+        tic; % Test Naive
+        result = Naive(points, 0);
+        n(i,m) = toc;
+
+        tic; % Test Kung
+        result = Naive(points, 0);
+        k(i, m) = toc;
+    end
 end
 
 figure;
 hold on;
-plot(1:5, n, 'r--o', 1:5, k, 'b--*');
+plot(1:5, mean(n, 1), 'r--o', 1:5, mean(k, 1), 'b--*');
