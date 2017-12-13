@@ -1,7 +1,10 @@
-function [front] = Kung(points)
+function [completed] = Kung(points, front)
 
-    [P, I] = sort(points(1, :), 'descend');
-    [front, count] = Front(P);
-    
+    pfront = 0;
+    [P, ~] = sort(points, 'descend');
+    [f] = Front(P);
+    [n, d] = size(f);
+    pfront = pfront + n;
+    completed = 0;
 end
 
