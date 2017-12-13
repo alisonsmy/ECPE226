@@ -32,4 +32,3 @@ function [ M, inner ] = Front( P )
         inner = [inner; a; b];
     end
 end
-

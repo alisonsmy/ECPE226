@@ -1,6 +1,4 @@
 function [completed] = Naive( pop, front)
-%NAIVE Summary of this function goes here
-%   Detailed explanation goes here
 
 [N, ~] = size(pop);
 
