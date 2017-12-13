@@ -1,0 +1,31 @@
+function [ M, inner ] = Front( P )
+    [m, ~] = size(P);
+    M = [];
+    inner = [];
+    half = floor(m/2);
+    if m == 1
+        M = P;      
+    else
+        [T, a] = Front(P(1:half, :));
+        [B, b] = Front(P((half+1):m, :));
+        [k, ~] = size(T);
+        for i = 1:k
+            p = B(i, 2);
+            for k
+            t = T(i, 2);
+           if p > t
+               M = [M; B(i, :)];
+           else
+               inner = [inner; B(i,:)];
+               break;
+           end
+        end
+        M = [M; T];
+        try
+        inner = [inner; a; b];
+        catch ME
+            x = [];
+        end
+    end
+end
+

@@ -1,0 +1,41 @@
+function [result] = Kung(points, frontN)
+    if isempty(points)
+        result = [];
+    else
+        result = [];
+        [~, I] = sort(points, 2, 'descend');
+        try
+        P = points(I(:, 2), :);
+        [front, inner] = Front(P);
+        try
+        P = [front; inner];
+        catch ME
+            x = [];
+        end
+        [N, ~] = size(front);
+        [M, ~] = size(P);
+        for p = 1:N
+            domX = 0;
+            domY = 0;
+            for other = 1:M
+                if p ~= other
+                    if P(p,1) <= P(other, 1)
+                        domX = domX + 1;
+                    end
+                    if P(p,2) <= P(other,2)
+                        domY = domY + 1;
+                    end
+                end
+            end
+            pf1 = P(p, 1);
+            pf2 = P(p, 2);
+            if isempty(result)
+                result = [pf1 pf2 (domY + domX) frontN];
+            else
+                result = [result; [pf1 pf2 (domY+domX) frontN]];
+            end
+        end
+        result = [result; Kung(inner, frontN+1)];
+    end
+end
+
