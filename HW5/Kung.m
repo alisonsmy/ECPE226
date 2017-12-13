@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 function [result] = Kung(points, frontN)
     [L, ~] = size(points);
     if L == 0
@@ -31,22 +30,3 @@ function [result] = Kung(points, frontN)
         result = [result; Kung(inner, frontN+1)];
     end
 end
-
-=======
-function [completed] = Kung(points, front)
-    [n, ~] = size(points);
-    completed = n;
-    while completed > 0
-        [P, ~] = sort(points, 'descend');
-        pFront = Front(P);
-        [a, ~] = size(pFront);
-        completed = completed - a;
-        if completed ~= 0
-           for i = 1:a
-               P(i) = [];
-           end
-        end
-    end
-end
-
->>>>>>> 6bc49a5f9ea50d7fcb7c2442e9dfccac869f62a2
